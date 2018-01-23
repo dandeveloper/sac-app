@@ -55,4 +55,16 @@ class TicketController extends Controller
 
         return back()->with('success', 'Chamado salvo com sucesso.');
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $ticket = ticket::find($id);
+        return view('tickets.edit', compact('ticket', 'id'));
+    }
 }
