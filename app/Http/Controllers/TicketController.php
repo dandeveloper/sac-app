@@ -37,4 +37,22 @@ class TicketController extends Controller
         
         return view('ticket.create', ['states' => $states, 'types' => $types, 'subjects' => $subjects]);
     }
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $ticket = $this->validate(request(), [
+            'type' => 'required',
+            'state' => 'required',
+            'subject' => 'required',
+            'details' => 'required'
+        ]);
+        Ticket::create($ticket);
+
+        return back()->with('success', 'Chamado salvo com sucesso.');
+    }
 }
