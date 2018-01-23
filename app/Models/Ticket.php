@@ -57,6 +57,13 @@ class Ticket extends Model
             'Elogios',
             'Sugestões'
     ];
+
+    /**
+     * Mass Assignment Exception
+     *
+     * @var array
+     */
+    protected $fillable = ['state','type', 'subject', 'details'];
     
     /**
      * Returns a array of Brazil's states
