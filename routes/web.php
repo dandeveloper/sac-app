@@ -14,7 +14,7 @@
 
 
 Route::group(['middleware' => 'web'], function() {
-    Route::get('/', 'TicketController@create');
+    Route::get('/', 'TicketController@index');
     Route::resource('ticket', 'TicketController');
 
     Auth::routes();
