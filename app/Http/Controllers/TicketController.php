@@ -111,4 +111,17 @@ class TicketController extends Controller
         $ticket = Ticket::find($id);
         return view('ticket.show', compact('ticket', 'id'));
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $product = Ticket::find($id);
+        $product->delete();
+        return redirect('/ticket')->with('success','Chamado excluido com sucesso.');
+    }
 }
