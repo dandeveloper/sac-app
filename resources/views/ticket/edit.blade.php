@@ -1,21 +1,11 @@
 @extends('layouts.app') 
 @section('content')
 <div class="container">
-    <h2>Criar um Chamado</h2><br />
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div><br /> @endif @if (\Session::has('success'))
-        <div class="alert alert-success">
-            <p>{{ \Session::get('success') }}</p>
-        </div><br />
-    @endif
+    <h2>Editar um Chamado</h2><br />
+
     <form method="post" action="{{action('TicketController@update', $id)}}">
         {{csrf_field()}}
+        <input name="_method" type="hidden" value="PATCH">
         <div class="row">
             <div class="form-group col-md-4">
                 <label for="type">Tipo do Chamado:</label>
