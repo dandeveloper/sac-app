@@ -1,11 +1,13 @@
 # SAC APP
 
-## Environment Configuration
-
 - PHP Version 7.1
 - Database: Mysql 8.0
 - DEPENDENCY MANAGER: Composer
 - Server used in development: Nginx
+
+__Clone this repository to your project folder and follow the documentation.__
+
+## Environment Configuration
 
 ### Using Laradock
 
