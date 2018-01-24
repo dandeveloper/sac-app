@@ -8,6 +8,8 @@ use App\Models\Ticket;
 class TicketController extends Controller
 {
 
+    private $ticket;
+
     /**
      * Create a new controller instance.
      *
@@ -16,6 +18,7 @@ class TicketController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        $this->ticket = new Ticket();
     }
 
     /**
@@ -30,10 +33,9 @@ class TicketController extends Controller
 
     public function create() 
     {
-        $ticket = new Ticket();
-        $states = $ticket->getStates();
-        $types = $ticket->getTypes();
-        $subjects = $ticket->getSubjects();
+        $states = $this->ticket->getStates();
+        $types = $this->ticket->getTypes();
+        $subjects = $this->ticket->getSubjects();
         
         return view('ticket.create', ['states' => $states, 'types' => $types, 'subjects' => $subjects]);
     }
@@ -53,7 +55,7 @@ class TicketController extends Controller
         ]);
         Ticket::create($ticket);
 
-        return back()->with('success', 'Chamado salvo com sucesso.');
+        return redirect('ticket')->with('success', 'Chamado salvo com sucesso.');
     }
 
     /**
@@ -64,7 +66,37 @@ class TicketController extends Controller
      */
     public function edit($id)
     {
+        $states = $this->ticket->getStates();
+        $types = $this->ticket->getTypes();
+        $subjects = $this->ticket->getSubjects();
+        
         $ticket = ticket::find($id);
-        return view('tickets.edit', compact('ticket', 'id'));
+        return view('ticket.edit', compact('ticket', 'id', 'states', 'types', 'subjects'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $ticket = Ticket::find($id);
+        $this->validate(request(), [
+            'type' => 'required',
+            'state' => 'required',
+            'subject' => 'required',
+            'details' => 'required'
+        ]);
+
+        $ticket->type = $request->get('type');
+        $ticket->state = $request->get('state');
+        $ticket->subject = $request->get('subject');
+        $ticket->details = $request->get('details');
+
+        $ticket->save();
+        return redirect('ticket')->with('success', 'Chamado atualizado com sucesso.');
     }
 }
