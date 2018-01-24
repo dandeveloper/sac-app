@@ -28,9 +28,14 @@ class TicketController extends Controller
      */
     public function index()
     {
-        return view('ticket.index', ['tickets' => Ticket::all()]);
+        return view('ticket.index', ['tickets' => Ticket::orderBy('created_at', 'desc')->get()]);
     }
 
+    /**
+     * Show the form for creating the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create() 
     {
         $states = $this->ticket->getStates();
@@ -39,6 +44,7 @@ class TicketController extends Controller
         
         return view('ticket.create', ['states' => $states, 'types' => $types, 'subjects' => $subjects]);
     }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -70,7 +76,7 @@ class TicketController extends Controller
         $types = $this->ticket->getTypes();
         $subjects = $this->ticket->getSubjects();
         
-        $ticket = ticket::find($id);
+        $ticket = Ticket::find($id);
         return view('ticket.edit', compact('ticket', 'id', 'states', 'types', 'subjects'));
     }
 
@@ -98,5 +104,11 @@ class TicketController extends Controller
 
         $ticket->save();
         return redirect('ticket')->with('success', 'Chamado atualizado com sucesso.');
+    }
+
+    public function show($id)
+    {
+        $ticket = Ticket::find($id);
+        return view('ticket.show', compact('ticket', 'id'));
     }
 }
