@@ -1,58 +1,62 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+# SAC APP
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+## Environment Configuration
 
-## About Laravel
+- PHP Version 7.1
+- Database: Mysql 8.0
+- DEPENDENCY MANAGER: Composer
+- Server used in development: Nginx
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel attempts to take the pain out of development by easing common tasks used in the majority of web projects, such as:
+### Using Laradock
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+I recommend to use [Docker](https://docs.docker.com/) with [Docker-Compose](https://docs.docker.com/compose/install/) and [Laradock](http://laradock.io/) to setup the Environment due to this Project is using [Laravel](https://laravel.com) Framework.
 
-Laravel is accessible, yet powerful, providing tools needed for large, robust applications.
+1 - Clone Laradock inside your PHP project:
 
-## Learning Laravel
+`$ git clone https://github.com/Laradock/laradock.git`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of any modern web application framework, making it a breeze to get started learning the framework.
+2 - Enter the laradock folder and rename env-example to .env.
 
-If you're not in the mood to read, [Laracasts](https://laracasts.com) contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, JavaScript, and more. Boost the skill level of yourself and your entire team by digging into our comprehensive video library.
+`$ cp env-example .env`
 
-## Laravel Sponsors
+3 - Run the project containers:
 
-We would like to extend our thanks to the following sponsors for helping fund on-going Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell):
+`$ docker-compose up -d nginx mysql phpmyadmin`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Pulse Storm](http://www.pulsestorm.net/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
+-------
 
-## Contributing
+## Project Configuration
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+OBS.: If you are using Laradock just execute workspace container bash:
 
-## Security Vulnerabilities
+`$ docker-compose exec workspace bash`
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1 - Installing Dependencies with Composer. Enter in the project root folder:
 
-## License
+`$ composer install`
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+2 - Rename the file .env.example to .env
+
+`$ mv .env.example .env`
+
+3 - Setting the application key
+
+`$ php artisan key:generate`
+
+4 - Create The Database in Mysql. I recommend to use database collation `utf8mb4_unicode_ci`.
+
+5 - Open the .env file and edit the database settings following your Environment configuration:
+
+`DB_CONNECTION=mysql`<br>
+`DB_HOST=mysql`<br>
+`DB_DATABASE=sac_app`<br>
+`DB_USERNAME=root`<br>
+`DB_PASSWORD=secret`<br>
+
+6 - Run the Migrations
+
+`$ php artisan migrate`
+
+7 - Run the Database Seed to create a default Login user (Name: Atendente, E-mail: atendente@atendente.com, Password: 123456):
+
+`$ php artisan db:seed`
